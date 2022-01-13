@@ -33,3 +33,6 @@ This framework has matured well and the .net framework has been around for many 
 ### EF Core Tools - Updating The Database
 - You can create a database migration file by typing ```Add-Migration Your_Migration_Name_Here``` in the package manager console
 - You can update the database by running ```Update-Database``` in the package manager console
+
+![Screenshot of CLEVAR Web Homepage](https://github.com/tomarks/ClevarWebProject/blob/main/ClevarWebHomepage.png "Home Page Screenshot")
+
