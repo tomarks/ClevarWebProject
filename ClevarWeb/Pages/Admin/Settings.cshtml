@@ -1,0 +1,75 @@
+﻿@page
+@model ClevarWeb.Pages.Admin.SystemSettingsModel
+@{
+    ViewData["Title"] = "System Settings";
+    ViewData["Nav"] = "Settings";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+<section class="wrapper style2 align-center fullscreen">
+    <div class="inner">
+        <section>
+            <header>
+                <h1>System Settings</h1>
+            </header>
+            <div class="content">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="SystemSetting.Id" />
+                    <div class="fields">
+                        <div class="field">
+                            <label asp-for="SystemSetting.SiteTitle"></label>
+                            <code>Title tag in HTML head.</code> <br />
+                            <input asp-for="SystemSetting.SiteTitle" />
+                        </div>
+                        <div class="field">
+                            <label asp-for="SystemSetting.SiteDescription"></label>
+                            <code>Meta tag 'description' in HTML head.</code>
+                            <textarea asp-for="SystemSetting.SiteDescription"> </textarea>
+                            <span asp-validation-for="SystemSetting.SiteDescription" class="text-danger"></span>
+                        </div>
+                        <div class="field">
+                            <label asp-for="SystemSetting.SiteKeywords"></label>
+                            <code>Meta tag 'keywords' in HTML head.</code> <br />
+                            <code>Keywords are used by search engines to assist with determining page relevance.</code>
+                            <textarea asp-for="SystemSetting.SiteKeywords"> </textarea>
+                            <span asp-validation-for="SystemSetting.SiteKeywords" class="text-danger"></span>
+                        </div>
+                        <div class="field half">
+                            <label asp-for="SystemSetting.SocialFacebookURL"></label>
+                            <input asp-for="SystemSetting.SocialFacebookURL" />
+                            <span asp-validation-for="SystemSetting.SocialFacebookURL" class="text-danger"></span>
+                        </div>
+                        <div class="field half">
+                            <label asp-for="SystemSetting.SocialInstagramURL"></label>
+                            <input asp-for="SystemSetting.SocialInstagramURL" />
+                            <span asp-validation-for="SystemSetting.SocialInstagramURL" class="text-danger"></span>
+                        </div>
+                        <div class="field half">
+                            <label asp-for="SystemSetting.SocialLinkedinURL"></label>
+                            <input asp-for="SystemSetting.SocialLinkedinURL" />
+                            <span asp-validation-for="SystemSetting.SocialLinkedinURL" class="text-danger"></span>
+                        </div>
+                        <div class="field half">
+                            <label asp-for="SystemSetting.SocialTwitterURL"></label>
+                            <input asp-for="SystemSetting.SocialTwitterURL" />
+                            <span asp-validation-for="SystemSetting.SocialTwitterURL" class="text-danger"></span>
+                        </div>
+                        <div class="field half">
+                            <label asp-for="SystemSetting.PublicEmailAddress"></label>
+                            <input asp-for="SystemSetting.PublicEmailAddress" />
+                            <span asp-validation-for="SystemSetting.PublicEmailAddress" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </form>
+            </div>
+        </section>
+    </div>
+</section>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

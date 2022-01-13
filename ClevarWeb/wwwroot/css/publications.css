@@ -1,0 +1,243 @@
+/*--------------------------------------*/
+/*      Light Blues   - #93C2F0         */
+/*      Dark Blues    - #A2C6ED         */
+/*      Grey          - #CDCDCD         */
+/*      Light Greys   - #F3F3F3         */
+/*      Off Black     - #232323         */
+/*--------------------------------------*/
+
+/* Publications Listing Styles */
+
+/* Publications Page Styles */
+
+/* Customize website's scrollbar like Mac OS
+Not supports in Firefox and IE */
+
+/* total width */
+body::-webkit-scrollbar {
+    background-color: #fff;
+    width: 10px
+}
+
+/* background of the scrollbar except button or resizer */
+body::-webkit-scrollbar-track {
+    background-color: #fff
+}
+
+/* scrollbar itself */
+body::-webkit-scrollbar-thumb {
+    background-color: #cdcdcd;
+    border-radius: 16px;
+}
+
+/* set button(top and bottom of the scrollbar) */
+body::-webkit-scrollbar-button {
+    display: none
+}
+
+
+@keyframes fadeInUp {
+    from {
+        transform: translate3d(0, 40px, 0)
+    }
+
+    to {
+        transform: translate3d(0, 0, 0);
+        opacity: 1
+    }
+}
+
+@-webkit-keyframes fadeInUp {
+    from {
+        transform: translate3d(0, 40px, 0)
+    }
+
+    to {
+        transform: translate3d(0, 0, 0);
+        opacity: 1
+    }
+}
+
+/* Publications Animation */
+.animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-fill-mode: both
+}
+
+.animatedFadeInUp {
+    opacity: 0
+}
+
+.fadeInUp {
+    opacity: 0;
+    animation-name: fadeInUp;
+    -webkit-animation-name: fadeInUp;
+}
+
+.Publications_Header {
+    text-align: center;
+    font-size: 60px;
+    font-weight: 600;
+}
+
+.Publications_Para {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 450;
+}
+
+.header2 {
+    padding-left: 25px;
+}
+
+a {
+    color: black;
+}
+
+    a:link {
+        color: black;
+    }
+
+    a:hover {
+        color: black;
+    }
+
+
+
+/* Hover */
+.hover-grow {
+    transform: scale(1);
+    transition: 0.30s all ease;
+}
+
+
+    .hover-grow:hover {
+        cursor: pointer !important;
+        transform: scale(1.05) !important;
+        z-index: 10 !important;
+    }
+
+
+
+.wrapper{
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+.content{
+    padding-right: 60px;
+    padding-left: 60px;
+    max-width: 100%;
+    flex: 1;
+}
+
+.list-row{
+    margin: 0 -15px;
+}
+
+.d-flex {
+    display: -ms-flexbox !important;
+    display: flex !important;
+}
+
+.list-post {
+    height: 180px !important;
+    padding: 0px 15px 0px;
+    /*border-bottom: 1px solid #ddd;*/
+    width: 100%;
+    margin-top: 0 !important;
+    position: relative;
+    backface-visibility: hidden;
+}
+.Publications {
+    position: relative;
+    flex: 1;
+}
+
+.Publications-back {
+    background: #fff;
+    width: 100%;
+    /*height: 100%;*/
+    position: absolute;
+    left: 0;
+    top: 0;
+    flex-wrap: wrap !important;
+}
+
+.main-img {
+    width: 170px;
+    overflow: hidden;
+    position: relative;
+    border-right: 4px solid black;
+    display: block;
+    height: 100%;
+}
+.post-img {
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    top: -10px;
+    left: -10px;
+    max-height: none;
+    max-width: none;
+    position: absolute;
+    display: block;
+    object-fit: cover;
+    transition: left 0.3s ease-out, top 0.3s ease-out, width 0.3s ease-out, height 0.3s ease-out, transform 5s ease-out 0.3s;
+}
+
+.post-content{
+    padding-left: 30px;
+    padding: 20px 20px 20px;
+    flex: 1;
+    /*justify-content: center!important;*/
+    flex-direction: column!important;
+}
+
+.main-info{
+    padding-right: 20px;
+}
+
+.Publications-heading {
+    line-height: 1em;
+    display: block;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.main-post-title {
+    margin-bottom: 5px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: "tablet-gothic-condensed",sans-serif !important;
+    font-weight: 700 !important;
+}
+.main-post-desc {
+    font-size: 20px;
+    line-height: 1em;
+    -webkit-line-clamp: 3;
+    max-height: 20px;
+    color: #898989;
+    margin: 5px 0;
+    -webkit-box-orient: vertical;
+    /*overflow: hidden;*/
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+
+.main-post-info {
+    margin-top: 10px;
+    color: #151515;
+    font-size: 12px;
+    font-weight: normal;
+    text-transform: uppercase;
+    position: relative;
+}
+
+
+

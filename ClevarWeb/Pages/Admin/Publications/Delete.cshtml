@@ -1,0 +1,33 @@
+﻿@page
+@model ClevarWeb.Pages.Admin.Publications.PublicationDeleteModel
+
+@{
+    ViewData["Title"] = "Delete Publication";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<section class="wrapper style2 align-center fullscreen">
+    <div class="inner">
+        <section>
+            <header>
+                <div class="workflow">
+                    <h1>
+                        Delete Publication?
+                    </h1>
+                    <h2>@Model.publication.PublicationName</h2>
+                    <h3>Are you sure you want to delete this?</h3>
+                </div>
+            </header>
+            <div class="content">
+                <form method="post">
+                    <input type="hidden" asp-for="publication.Id" />
+                    <input type="submit" value="Delete" class="button primary" />
+                </form>
+
+                <div>
+                    <a class="button small" asp-page="./Index">Back to List</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>

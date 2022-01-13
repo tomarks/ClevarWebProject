@@ -1,0 +1,121 @@
+/* MENU */
+a.menu-text li {
+    font-size: 2rem !important;
+}
+
+a {
+    text-decoration: none;
+    color: #232323;
+    transition: color 0.3s ease;
+}
+
+    a:hover {
+        color: #4191DC;
+        font-weight: 800;
+    }
+    
+#menuToggle {
+    display: block;
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 10;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+    #menuToggle input {
+        display: block;
+        width: 3rem;
+        height: 2rem;
+        position: absolute;
+        top: -7px;
+        left: -5px;
+        cursor: pointer;
+        opacity: 0; /* hide this */
+        z-index: 20; /* and place it over the hamburger */
+        -webkit-touch-callout: none;
+    }
+    /* hamburger */
+    #menuToggle span {
+        display: block;
+        width: 33px;
+        height: 4px;
+        margin-bottom: 5px;
+        position: relative;
+        background: #cdcdcd;
+        border-radius: 3px;
+        z-index: 10;
+        transform-origin: 4px 0px;
+        transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0), background 0.5s cubic-bezier(0.77,0.2,0.05,1.0), opacity 0.55s ease;
+    }
+
+        #menuToggle span:first-child {
+            transform-origin: 0% 0%;
+        }
+
+        #menuToggle span:nth-last-child(2) {
+            transform-origin: 0% 100%;
+        }
+
+    /* 
+  * Transform all the slices of hamburger
+  * into a crossmark.
+  */
+    #menuToggle input:checked ~ span {
+        opacity: 1;
+        transform: rotate(45deg) translate(-2px, -1px);
+        background: #232323;
+    }
+        /*
+  * But hide the middle one.
+  */
+        #menuToggle input:checked ~ span:nth-last-child(3) {
+            opacity: 0;
+            transform: rotate(0deg) scale(0.2, 0.2);
+        }
+        /*
+  * Ohyeah and the last one should go the other direction
+  */
+        #menuToggle input:checked ~ span:nth-last-child(2) {
+            opacity: 1;
+            transform: rotate(-45deg) translate(0, -1px);
+        }
+
+    #menuToggle input:hover ~ span {
+        background: #4191DC !important;
+    }
+
+/*
+  * Make this absolute positioned
+  * at the top left of the screen
+  */
+#menu {
+    position: fixed;
+    width: 32rem;
+    /* min-width: 500px; */
+    height: 110%;
+    margin: -100px 0 0 0;
+    padding: 4rem;
+    padding-top: 8rem;
+    right: -8rem;
+    background-image: linear-gradient(to bottom right, rgb(255, 255, 255, .8), rgb(234, 247, 253, 0.9));
+    list-style-type: none;
+    -webkit-font-smoothing: antialiased;
+    /* to stop flickering of text in safari */
+    transform-origin: 0% 0%;
+    transform: translate(100%, 0);
+    transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+
+    #menu li {
+        padding: 10px 0;
+        font-size: 22px;
+    }
+/*
+  * And let's fade it in from the left
+  */
+#menuToggle input:checked ~ ul {
+    transform: scale(1.0, 1.0);
+    opacity: 1;
+}

@@ -1,0 +1,102 @@
+﻿@page
+@model ClevarWeb.Pages.Admin.Publications.PublicationIndexModel
+
+@{
+    ViewData["Title"] = "Projects";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#PublicationsTable').DataTable({
+                paging: true,
+                "lengthMenu": [25, 50, 100, 1000],
+                order: [[4, 'desc']],
+                columnDefs: [
+                    { targets: [0,5], orderable: false },
+                    { targets: [4], type: "date" },
+                ]
+            });
+        });
+    </script>
+}
+
+<section class="wrapper style2 align-center fullscreen">
+    <div class="inner">
+        <section>
+            <header>
+                <h1>Clevar Publications</h1>
+                @if (Model.Publications.Any())
+                {
+                    <a class="button primary small" asp-page="Create">Create a New Publication</a>
+                }
+            </header>
+            <div class="table-wrapper">
+                @if (Model.Publications.Any())
+                {
+                    <table id="PublicationsTable">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>URL</th>
+                                <th class="topcenter">Author</th>
+                                <th class="topcenter">Published</th>
+                                <th class="topcenter">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var publication in Model.Publications)
+                            {
+                                <tr>
+                                    <td class="topleft">
+                                        @if (publication.PrimaryDocument != null && publication.PrimaryDocument.IsImage())
+                                        {
+                                            <div class="tableImage">
+                                                <img src="@publication.PrimaryDocument.GetFilePath(true)" alt="@publication.PrimaryDocument.DocumentName" />
+                                            </div>
+                                        }
+                                    </td>
+                                    <td class="topleft">
+                                        @publication.PublicationName
+                                    </td>
+                                    <td class="topleft">
+                                        <a href="@publication.PublicationUrl">@publication.PublicationUrl</a>
+                                    </td>
+                                    <td class="topcenter">
+                                        @if (publication.Author != null && publication.Author.PrimaryDocument != null && publication.Author.PrimaryDocument.IsImage())
+                                        {
+                                            <div class="tableImage portrait">
+                                                <span type="hidden" style="display:none">@publication.Author.Name</span>
+                                                <img src="@publication.Author.PrimaryDocument.GetFilePath(true)" alt="@publication.Author.PrimaryDocument.DocumentName" />
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            @publication.DisplayAuthorName
+                                        }
+                                    </td>
+                                    <td>
+                                        @publication.DisplayPublishDate
+                                    </td>
+                                    <td>
+                                        <a asp-page="./Edit" asp-route-id="@publication.Id">Edit</a> |
+                                        <a asp-page="./Delete" asp-route-id="@publication.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <h2>There are no Clevar Publications in the database.</h2>
+                    <p>
+                        <a class="button primary small" asp-page="Create">Create a New Publication</a>
+                    </p>
+                }
+            </div>
+        </section>
+    </div>
+</section>
+

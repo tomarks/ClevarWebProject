@@ -1,0 +1,105 @@
+﻿@page
+@model ClevarWeb.Pages.Admin.Projects.IndexModel
+
+@{
+    ViewData["Title"] = "Projects";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#ProjectsTable').DataTable({
+                paging: true,
+                "lengthMenu": [25, 50, 100, 1000],
+                order: [[4, 'desc']],
+                columnDefs: [
+                    { targets: [0,6], orderable: false},
+                    { targets: [3,4], type: "date"},
+                ]
+            });
+        });
+    </script>
+}
+<section class="wrapper style2 align-center fullscreen">
+    <div class="inner">
+        <section>
+            <header>
+                <h1>Clevar Projects</h1>
+                @if (Model.Projects.Any())
+                {
+                    <a class="button primary small" asp-page="Create">Create a New Project</a>
+                }
+            </header>
+            <div class="table-wrapper">
+                @if (Model.Projects.Any())
+                {
+                    <table id="ProjectsTable">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Title</th>
+                                <th class="topcenter" style="width: 100px">Author</th>
+                                <th class="topcenter">Created</th>
+                                <th>Published</th>
+                                <th class="topcenter" style="width: 100px">Is Active</th>
+                                <th class="topcenter">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var project in Model.Projects)
+                            {
+                                <tr>
+                                    <td class="topleft">
+                                        @if (project.PrimaryDocument != null && project.PrimaryDocument.IsImage())
+                                        {
+                                            <div class="tableImage">
+                                                <img src="@project.PrimaryDocument.GetFilePath(true)" alt="@project.PrimaryDocument.DocumentName" />
+                                            </div>
+                                        }
+                                    </td>
+                                    <td class="topleft">
+                                        @project.Title
+                                    </td>
+                                    <td class="topcenter">
+                                        @if (project.Author != null && project.Author.PrimaryDocument != null && project.Author.PrimaryDocument.IsImage())
+                                        {
+                                            <div class="tableImage portrait">
+                                                <span type="hidden" style="display:none">@project.Author.Name</span>
+                                                <img src="@project.Author.PrimaryDocument.GetFilePath(true)" alt="@project.Author.PrimaryDocument.DocumentName" />
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            @project.DisplayAuthorName
+                                        }
+                                    </td>
+                                    <td>
+                                        @project.DisplayCreatedDateTime
+                                    </td>
+                                    <td class="topcenter">
+                                        @project.DisplayPublishDate
+                                    </td>
+                                    <td class="topcenter">
+                                        @project.IsActive
+                                    </td>
+                                    <td class="topcenter">
+                                        <a asp-page="./Edit" asp-route-id="@project.Id">Edit</a> |
+                                        <a asp-page="./Details" asp-route-id="@project.Id">Preview</a> |
+                                        <a asp-page="./Delete" asp-route-id="@project.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <h2>There are no Clevar Projects in the database.</h2>
+                    <p>
+                        <a class="button primary small" asp-page="Create">Create a New Project</a>
+                    </p>
+                }
+            </div>
+        </section>
+    </div>
+</section>

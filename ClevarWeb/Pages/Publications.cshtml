@@ -1,0 +1,68 @@
+﻿@page
+@model ClevarWeb.PublicationsModel
+@using ClevarWeb.Utility;
+
+@{
+    ViewData["Title"] = "Publications";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+@section HTMLHead {
+    <link href="~/css/Publications.css?rev=@SystemProperties.Instance.Revision" type="text/css" rel="stylesheet" />
+}
+
+<partial name="_ClevarLogoHeadingPartial" />
+
+<div>
+    <div id="pagecontentwrapper" class="container animated animatedFadeInUp fadeInUp panel">
+        <div class="header2">
+            <span class="bigicon icon-rocket"></span>
+            <div class="Publications_Header">Publications</div>
+            <div class="Publications_Para"> Our current publications related to our CLEVAR group.</div>
+            <hr class="separator">
+        </div>
+
+        <div class="wrapper">
+            <div class=" content">
+                <div class="list-row">
+                    @foreach (var item in Model.Publications)
+                    {
+                        <article class=" list-post d-flex">
+                            <div data-aos="fade-up" class="Publications hover-grow">
+                                <div class=" Publications-back d-flex">
+                                    @*<a class="main-img">
+                                        <img src="@item.GetPrimaryDocumentFilePath()" alt="sample image" class="post-img">
+                                    </a>*@
+                                    <div class="post-content d-flex">
+                                        <div class="main-info">
+                                            <div class="Publications-heading">
+                                                Publications
+                                            </div>
+
+                                            <h3 class="main-post-title">@Html.DisplayFor(modelItem => item.PublicationName)
+                                               
+                                            </h3>
+                                            <div class="main-post-desc">
+                                                <a href = @Html.DisplayFor(modelItem => item.PublicationUrl) target="_blank" class=" main-post-desc">
+                                                    @Html.DisplayFor(modelItem => item.PublicationUrl)
+
+                                                </a>
+
+                                            </div>
+                                            <div class="main-post-info">
+                                                <div class="pub-date">@Html.DisplayFor(modelItem => item.DisplayPublishDate)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    }
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+</div>

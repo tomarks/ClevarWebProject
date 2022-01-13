@@ -1,0 +1,103 @@
+﻿@page
+@model ClevarWeb.Pages.Admin.People.IndexModel
+
+@{
+    ViewData["Title"] = "People";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#PeopleTable').DataTable({
+                paging: true,
+                "lengthMenu": [25, 50, 100, 1000],
+                order: [[5, 'desc']],
+                columnDefs: [
+                    { targets: [0, 7], orderable: false },
+                    { targets: [5], type: "date" },
+                ]
+            });
+        });
+    </script>
+}
+<section class="wrapper style2 align-center fullscreen">
+    <div class="inner">
+        <section>
+            <header>
+                <h1>Clevar People</h1>
+                @if (Model.People.Any())
+                {
+                    <a class="button primary small" asp-page="Create">Create a new Clevar Person</a>
+                }
+            </header>
+            <div class="table-wrapper">
+                @if (Model.People.Any())
+                {
+                    <table id="PeopleTable">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th class="topcenter" style="width: 50px">Authored Projects</th>
+                                <th class="topcenter" style="width: 50px">Supervised Projects</th>
+                                <th class="topcenter" style="width: 50px">Authored Publications</th>
+                                <th class="topcenter">Created</th>
+                                <th class="topcenter" style="width: 100px">Is Active</th>
+                                <th class="topcenter" style="width: 200px">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var person in Model.People)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (person.PrimaryDocument != null && person.PrimaryDocument.IsImage())
+                                        {
+                                            <div class="tableImage portrait">
+                                                <img src="@person.PrimaryDocument.GetFilePath(true)" alt="@person.PrimaryDocument.DocumentName" />
+                                            </div>
+                                        }
+                                    </td>
+                                    <td class="topleft">
+                                        <b>@person.Name</b>
+                                    </td>
+                                    <td class="topcenter">
+                                        @person.AuthoredProjects.Count().ToString()
+                                    </td>
+                                    <td class="topcenter">
+                                        @person.SupervisedProjects.Count().ToString()
+                                    </td>
+                                    <td class="topcenter">
+                                        @person.AuthoredPublications.Count().ToString()
+                                    </td>
+                                    <td class="topcenter">
+                                        @person.DisplayCreatedDate
+                                    </td>
+                                    <td class="topcenter">
+                                        @person.IsActive
+                                    </td>
+                                    <td class="topcenter">
+                                        <a asp-page="./Edit" asp-route-id="@person.Id">Edit</a> |
+                                        <a asp-page="./EditCartoon" asp-route-id="@person.Id">Edit Cartoon</a> |
+                                        <a asp-page="./Details" asp-route-id="@person.Id">Preview</a> |
+                                        <a asp-page="./Delete" asp-route-id="@person.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <h2>There are no Clevar People in the database.</h2>
+                    <p>
+                        <a class="button primary small" asp-page="Create">Create a new Clevar Person</a>
+                    </p>
+                }
+
+            </div>
+        </section>
+    </div>
+</section>
+
+

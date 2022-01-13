@@ -1,0 +1,97 @@
+﻿@page
+@model ClevarWeb.LoginModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<section id="login">
+    <div class="content">
+        <header>
+            <h2>Login</h2>
+        </header>
+        <form method="post">
+            <div class="login-group email">
+                <input asp-for="Email" />
+            </div>
+            <div class="login-group">
+                @*<label asp-for="UserName"></label>*@
+                <input asp-for="UserName" />
+            </div>
+            <div class="login-group">
+                @*<label asp-for="Password"></label>*@
+                <input asp-for="Password" />
+            </div>
+            <button class="primary ">Go</button>
+        </form>
+        <div class="message">
+            @Model.Message
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Login Form */
+    #login {
+        height: 100vh;
+        width: 100%;
+        padding: 3rem;
+
+        display: flex;
+        align-items: center;
+        justify-content:center;
+    }
+        #login .login-group {
+            margin: 20px auto;
+        }
+
+        #login .content {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        #login .message {
+            -webkit-animation: fadeout 12s; /* Safari, Chrome and Opera > 12.1 */
+            -moz-animation: fadeout 12s; /* Firefox < 16 */
+            -ms-animation: fadeout 12s; /* Internet Explorer */
+            -o-animation: fadeout 12s; /* Opera < 12.1 */
+            animation: fadeout 12s;
+            opacity: 0;
+            text-align: center;
+        }
+
+        #login .email {
+            display:none !important;
+        }
+
+    @@keyframes fadeout {
+        0%      { opacity: 1; }
+        80%     { opacity: 1; }
+        100%    { opacity: 0; }
+    }
+    /* Firefox < 16 */
+    @@-moz-keyframes fadeout {
+        0%      { opacity: 1; }
+        80%     { opacity: 1; }
+        100%    { opacity: 0; }
+    }
+    /* Safari, Chrome and Opera > 12.1 */
+    @@-webkit-keyframes fadeout {
+        0%      { opacity: 1; }
+        80%     { opacity: 1; }
+        100%    { opacity: 0; }
+    }
+    /* Internet Explorer */
+    @@-ms-keyframes fadeout {
+        0%      { opacity: 1; }
+        80%     { opacity: 1; }
+        100%    { opacity: 0; }
+    }
+    /* Opera < 12.1 */
+    @@-o-keyframes fadeout {
+        0%      { opacity: 1; }
+        80%     { opacity: 1; }
+        100%    { opacity: 0; }
+    }
+</style>
+

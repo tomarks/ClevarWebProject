@@ -1,0 +1,234 @@
+﻿@page
+@model ClevarWeb.Pages.Admin.People.EditCartoonModel
+
+@{
+    ViewData["Title"] = "Edit Project";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+@section HTMLHead {
+    <link href="~/lib/jquery-ui-1.12.1/jquery-ui.min.css" type="text/css" rel="stylesheet">
+}
+
+<section class="wrapper style2 align-center fullscreen">
+    <div class="inner">
+        <section>
+            <header>
+                <div class="workflow">
+                    <h2>Edit Clevar Person - Cartoon Layers</h2>
+                    <ul>
+                        <li>
+                            Create
+                        </li>
+                        <li>
+                            Edit - Bio
+                        </li>
+                        <li class="bold">
+                            Edit - Cartoon
+                        </li>
+                        <li>
+                            Preview
+                        </li>
+                    </ul>
+                </div>
+            </header>
+            <div class="table-wrapper">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="personId" />
+                    @if (Model.CartoonImages.Any())
+                    {
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="display:none"></th>
+                                    <th class="topleft" style="width:150px;">Layer Ordering <br /> <em>(Top to Bottom)</em> </th>
+                                    <th class="topcenter">Image Layer</th>
+                                    <th class="topcenter" style="width:480px">Styles</th>
+                                    <th class="topcenter" style="width: 200px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var cartoon in Model.CartoonImages.OrderBy(x => x.LayerNumber))
+                                {
+                                    <tr>
+                                        <td style="display:none">
+                                            <input type="hidden" name="CartoonImages.Index" value="@cartoon.Id" />
+                                            <input type="hidden" name="CartoonImages[@cartoon.Id].Id" value="@cartoon.Id" />
+                                        </td>
+                                        <td class="topleft">
+                                            <div class="ordering-container">
+                                                <i class="fa-arrow-up fa orderingArrow" orderingaction="up" cartoonid="@cartoon.Id"></i>
+                                                <input type="number" class="LayerNumberInputBox" name="CartoonImages[@cartoon.Id].LayerNumber" value="@cartoon.LayerNumber" />
+                                                <i class="fa-arrow-down fa orderingArrow" orderingaction="down" cartoonid="@cartoon.Id"></i>
+                                            </div>
+                                        </td>
+                                        <td class="topcenter cartoon-selector">
+                                            <img src="@cartoon.Document.GetFilePath()" alt="Alternate Text" />
+                                        </td>
+                                        <td class="topcenter">
+                                            <select name="CartoonImages[@cartoon.Id].Styles" value="@cartoon.Styles" style="width: 90%; display:inline">
+                                                @foreach (var styleOption in Model.StylesSelectListItems)
+                                                {
+                                                    if (!string.IsNullOrEmpty(cartoon.Styles) && cartoon.Styles.Contains(styleOption.Value))
+                                                    {
+                                                        <option selected value="@styleOption.Value">@styleOption.Text</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@styleOption.Value">@styleOption.Text</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </td>
+                                        <td class="topcenter">
+                                            <button asp-page-handler="Delete" type="submit" name="CartoonID" value=@cartoon.Id class="button primary">Delete</button>
+                                        </td>
+                                    </tr>
+                                }
+
+
+                            </tbody>
+
+                        </table>
+
+                    }
+                    <div class="field">
+                        <label asp-for="UploadedFile" class="file-upload">
+                            <i class="fa fa-upload"></i> Upload new cartoon layer..
+                        </label>
+                        <input asp-for="UploadedFile" type="file" />
+                    </div>
+
+                    <br />
+                    <div class="form-group">
+                        <button id="Save" asp-page-handler="Save" type="submit" name="SaveAndContinue" value="Save" class="button primary">Save</button>
+                        <button asp-page-handler="Save" type="submit" name="SaveAndContinue" value="EditBio" class="button primary">Save and Edit Bio</button>
+                        <button asp-page-handler="Save" type="submit" name="SaveAndContinue" value="Preview" class="button primary">Save and Preview</button>
+                        <button asp-page-handler="Save" type="submit" name="SaveAndContinue" value="Exit" class="button primary">Save and Exit</button>
+                    </div>
+                    <br />
+                    <div>
+                        <a class="button small" asp-page="Index">Back to List</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/lib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+
+
+        $(document).ready(function () {
+
+            function selectRow(input) {
+                var selectedRow = input.parentsUntil("tr").parent().first()[0];
+                return selectedRow;
+            }
+
+            function swapRows(row1, row2) {
+                var r1 = $(row1)[0];
+                var r2 = $(row2)[0];
+                $(r1).detach().insertAfter($(r2))
+            }
+
+            $(".orderingArrow").click(function (evt) {
+                var action = $(this).attr("orderingaction");
+                console.log(action);
+
+                var currentInput = $(this).siblings(".LayerNumberInputBox").first();
+                var currentRow = selectRow(currentInput);
+
+                if (action == "down") {
+                    // Check if there are any inputs below
+                    var nextInput = currentInput.parentsUntil("tr").parent().next("tr").find(".LayerNumberInputBox").first();
+                    if (nextInput.length) {
+                        currentInput.val(parseInt(currentInput.val()) + 1)
+                        nextInput.val(parseInt(nextInput.val()) - 1)
+                        var nextRow = selectRow(nextInput);
+                        swapRows(currentRow, nextRow)
+                    }
+                } else {
+                    var prevInput = currentInput.parentsUntil("tr").parent().prev("tr").find(".LayerNumberInputBox").first();
+                    if (prevInput.length) {
+                        currentInput.val(parseInt(currentInput.val()) - 1)
+                        prevInput.val(parseInt(prevInput.val()) + 1)
+                        var prevRow = selectRow(prevInput);
+                        swapRows(prevRow, currentRow )
+                    }
+                }
+
+            });
+
+            $("#UploadedFile").change(function (evt) {
+                console.log("Submitting File...")
+                evt.preventDefault();
+                $.ajax({
+                    url: '?handler=UploadFile',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    data: new FormData(document.forms[0]),
+                    contentType: false,
+                    processData: false,
+                    type: 'post',
+                    success: function (e) {
+                        if (e) {
+                            if (e.error) {
+                                console.log(e.error);
+
+                            } else {
+                                console.log('File Path - ' + e.path);
+                                $("#primaryDocumentImage").attr("src", e.path);
+
+                                $("#Save").trigger("click");
+                            }
+                        }
+                    }
+                });
+            });
+        });
+
+    </script>
+}
+
+<style>
+    .LayerNumberInputBox{
+        text-align:center;
+    }
+
+    .ordering-container {
+        width: 100px;
+        text-align: center;
+    }
+
+        .ordering-container label {
+            margin: 5px;
+        }
+
+        .ordering-container i:hover {
+            color: #0275d8;
+            cursor: pointer;
+        }
+
+    cartoon-selector {
+    }
+
+    .cartoon-selector img {
+        height: 100px;
+    }
+
+    li.cartoon-selector {
+        list-style: none;
+    }
+
+    a {
+        text-decoration: none !important;
+    }
+</style>

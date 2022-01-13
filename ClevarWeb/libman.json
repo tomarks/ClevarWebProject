@@ -1,0 +1,103 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "flatpickr@4.6.3",
+      "destination": "wwwroot/lib/flatpickr/",
+      "files": [
+        "flatpickr.css",
+        "flatpickr.js",
+        "flatpickr.min.css",
+        "flatpickr.min.js"
+      ]
+    },
+    {
+      "library": "Trumbowyg@2.20.0",
+      "destination": "wwwroot/lib/Trumbowyg/",
+      "files": [
+        "plugins/allowtagsfrompaste/trumbowyg.allowtagsfrompaste.js",
+        "plugins/allowtagsfrompaste/trumbowyg.allowtagsfrompaste.min.js",
+        "plugins/base64/trumbowyg.base64.js",
+        "plugins/base64/trumbowyg.base64.min.js",
+        "plugins/cleanpaste/trumbowyg.cleanpaste.js",
+        "plugins/cleanpaste/trumbowyg.cleanpaste.min.js",
+        "plugins/colors/ui/trumbowyg.colors.css",
+        "plugins/colors/ui/trumbowyg.colors.min.css",
+        "plugins/colors/trumbowyg.colors.js",
+        "plugins/colors/trumbowyg.colors.min.js",
+        "plugins/emoji/ui/trumbowyg.emoji.css",
+        "plugins/emoji/ui/trumbowyg.emoji.min.css",
+        "plugins/emoji/trumbowyg.emoji.js",
+        "plugins/emoji/trumbowyg.emoji.min.js",
+        "plugins/fontfamily/trumbowyg.fontfamily.js",
+        "plugins/fontfamily/trumbowyg.fontfamily.min.js",
+        "plugins/fontsize/trumbowyg.fontsize.js",
+        "plugins/fontsize/trumbowyg.fontsize.min.js",
+        "plugins/giphy/ui/trumbowyg.giphy.css",
+        "plugins/giphy/ui/trumbowyg.giphy.min.css",
+        "plugins/giphy/trumbowyg.giphy.js",
+        "plugins/giphy/trumbowyg.giphy.min.js",
+        "plugins/highlight/ui/trumbowyg.highlight.css",
+        "plugins/highlight/ui/trumbowyg.highlight.min.css",
+        "plugins/highlight/trumbowyg.highlight.js",
+        "plugins/highlight/trumbowyg.highlight.min.js",
+        "plugins/history/trumbowyg.history.js",
+        "plugins/history/trumbowyg.history.min.js",
+        "plugins/insertaudio/trumbowyg.insertaudio.js",
+        "plugins/insertaudio/trumbowyg.insertaudio.min.js",
+        "plugins/lineheight/trumbowyg.lineheight.js",
+        "plugins/lineheight/trumbowyg.lineheight.min.js",
+        "plugins/mathml/ui/trumbowyg.mathml.css",
+        "plugins/mathml/ui/trumbowyg.mathml.min.css",
+        "plugins/mathml/trumbowyg.mathml.js",
+        "plugins/mathml/trumbowyg.mathml.min.js",
+        "plugins/mention/ui/trumbowyg.mention.css",
+        "plugins/mention/ui/trumbowyg.mention.min.css",
+        "plugins/mention/trumbowyg.mention.js",
+        "plugins/mention/trumbowyg.mention.min.js",
+        "plugins/noembed/trumbowyg.noembed.js",
+        "plugins/noembed/trumbowyg.noembed.min.js",
+        "plugins/pasteembed/trumbowyg.pasteembed.js",
+        "plugins/pasteembed/trumbowyg.pasteembed.min.js",
+        "plugins/pasteimage/trumbowyg.pasteimage.js",
+        "plugins/pasteimage/trumbowyg.pasteimage.min.js",
+        "plugins/preformatted/trumbowyg.preformatted.js",
+        "plugins/preformatted/trumbowyg.preformatted.min.js",
+        "plugins/resizimg/trumbowyg.resizimg.js",
+        "plugins/resizimg/trumbowyg.resizimg.min.js",
+        "plugins/ruby/trumbowyg.ruby.js",
+        "plugins/ruby/trumbowyg.ruby.min.js",
+        "plugins/specialchars/ui/trumbowyg.specialchars.css",
+        "plugins/specialchars/ui/trumbowyg.specialchars.min.css",
+        "plugins/specialchars/trumbowyg.specialchars.js",
+        "plugins/specialchars/trumbowyg.specialchars.min.js",
+        "plugins/table/ui/trumbowyg.table.css",
+        "plugins/table/ui/trumbowyg.table.min.css",
+        "plugins/table/trumbowyg.table.js",
+        "plugins/table/trumbowyg.table.min.js",
+        "plugins/template/trumbowyg.template.js",
+        "plugins/template/trumbowyg.template.min.js",
+        "plugins/upload/trumbowyg.upload.js",
+        "plugins/upload/trumbowyg.upload.min.js",
+        "ui/icons.svg",
+        "ui/trumbowyg.css",
+        "ui/trumbowyg.min.css",
+        "trumbowyg.js",
+        "trumbowyg.min.js"
+      ]
+    },
+    {
+      "library": "Swiper@5.3.8",
+      "destination": "wwwroot/lib/swiper/"
+    },
+    {
+      "library": "animate.css@4.1.0",
+      "destination": "wwwroot/lib/animate.css/"
+    },
+    {
+      "library": "datatables@1.10.20",
+      "destination": "wwwroot/lib/datatables/"
+    }
+  ]
+}

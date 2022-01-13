@@ -1,0 +1,173 @@
+﻿@page
+@model ClevarWeb.Pages.Admin.People.EditPeopleModel
+
+@{
+    ViewData["Title"] = "Edit Project";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<section class="wrapper style2 align-center fullscreen">
+    <div class="inner">
+        <section>
+            <header>
+                <div class="workflow">
+                    <h2>Edit Clevar Person</h2>
+                    <ul>
+                        <li>
+                            Create
+                        </li>
+                        <li class="bold">
+                            Edit - Bio
+                        </li>
+                        <li>
+                            Edit - Cartoon
+                        </li>
+                        <li>
+                            Preview
+                        </li>
+                    </ul>
+                </div>
+            </header>
+            <div class="content">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="PrimaryDocumentPath" />
+
+                    <div class="primaryImage">
+                        <img id="primaryDocumentImage" src="@Model.PrimaryDocumentPath" />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="field">
+                            <label asp-for="UploadedFile" class="file-upload">
+                                <i class="fa fa-upload"></i> Upload new image..
+                            </label>
+                            <input asp-for="UploadedFile" type="file" />
+                        </div>
+                    </div>
+
+                    <div class="fields">
+                        <div class="field third">
+                            <label asp-for="Name"></label>
+                            <input asp-for="Name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="field third">
+                            <label asp-for="Title"></label>
+                            <input asp-for="Title" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="field third">
+                            <label asp-for="SubTitle"></label>
+                            <input asp-for="SubTitle" />
+                            <span asp-validation-for="SubTitle" class="text-danger"></span>
+                        </div>
+
+                        <div class="field">
+                            <label asp-for="BioHtml"></label>
+                            <textarea id="personContentEditor" asp-for="BioHtml"></textarea>
+                        </div>
+
+                        <div class="field">
+                            <input asp-for="IsActive" type="checkbox" />
+                            <label asp-for="IsActive"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button asp-page-handler="Save" type="submit" name="SaveAndContinue" value="EditCartoon" class="button primary">Save and Edit Cartoon</button>
+                        <button asp-page-handler="Save" type="submit" name="SaveAndContinue" value="Preview" class="button primary">Save and Preview</button>
+                        <button asp-page-handler="Save" type="submit" name="SaveAndContinue" value="Exit" class="button primary">Save and Exit</button>
+                    </div>
+                </form>
+
+                <div>
+                    <a class="button small" asp-page="Index">Back to List</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+
+        $('#personContentEditor').trumbowyg({
+            autogrow: true,
+            btns: [
+                ['viewHTML'],
+                ['undo', 'redo'], // Only supported in Blink browsers
+                ['formatting'],
+                ['strong', 'em', 'del'],
+                ['superscript', 'subscript'],
+                ['link'],
+                ['insertImage'],
+                ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+                ['unorderedList', 'orderedList'],
+                ['horizontalRule'],
+                ['removeformat']
+            ]
+        });
+
+        $(document).ready(function () {
+            $("#UploadedFile").change(function (evt) {
+                console.log("Submitting File...")
+                evt.preventDefault();
+                $.ajax({
+                    url: '?handler=UploadFile',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    data: new FormData(document.forms[0]),
+                    contentType: false,
+                    processData: false,
+                    type: 'post',
+                    success: function (e) {
+                        if (e) {
+                            if (e.error) {
+                                console.log(e.error);
+
+                            } else {
+                                console.log('File Path - ' + e.path);
+                                $("#primaryDocumentImage").attr("src", e.path);
+                            }
+                        }
+                    }
+                });
+            });
+        });
+
+    </script>
+}
+
+<style>
+    .primaryImage {
+    }
+        .primaryImage img {
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-radius: 50%;
+            
+            height: 250px;
+            width: 250px;
+
+            -moz-object-fit: cover;
+            -webkit-object-fit: cover;
+            -ms-object-fit: cover;
+            object-fit: cover;
+    
+            -moz-object-position: center;
+            -webkit-object-position: center;
+            -ms-object-position: center;
+            object-position: center;
+        }
+
+    a {
+        text-decoration: none !important;
+    }
+</style>

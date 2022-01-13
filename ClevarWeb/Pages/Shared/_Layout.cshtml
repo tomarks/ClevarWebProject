@@ -1,0 +1,150 @@
+﻿@using Microsoft.Extensions.Configuration;
+@using ClevarWeb.Utility;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="keywords" content="@SystemProperties.Instance.SystemSettings.SiteKeywords">
+    <meta name="description" content="@SystemProperties.Instance.SystemSettings.SiteDescription">
+    <title>@ViewData["Title"] - @SystemProperties.Instance.SystemSettings.SiteTitle</title>
+    <link href="~/lib/animate.css/animate.min.css"  type="text/css" rel="stylesheet"  />
+    <link href="~/css/story/story.css" type="text/css" rel="stylesheet"  />
+    <link href="~/css/site.css?rev=@SystemProperties.Instance.Revision" type="text/css" rel="stylesheet" />
+    <link href="~/css/menu.css?rev=@SystemProperties.Instance.Revision" type="text/css" rel="stylesheet" />
+    @RenderSection("HTMLHead", required: false)
+</head>
+<body>
+
+    @* Content *@
+    <div id="threecanvas"></div>
+
+    <nav role="navigation">
+        <div id="menuToggle">
+            <input type="checkbox" />
+            <span></span>
+            <span></span>
+            <span></span>
+            <ul id="menu">
+                <a asp-page="/Index" class="menu-text"><li>Home</li></a>
+                <a asp-page="/Projects" class="menu-text"><li>Projects</li></a>
+                <a asp-page="/Publications" class="menu-text"><li>Publications</li></a>
+                <a asp-page="/People" class="menu-text"><li>People</li></a>
+               
+                    @if (SystemProperties.Instance.IsDebugMode)
+                    {
+                        <a asp-page="/Admin/Login" class="menu-text"><li>CMS Login</li></a>
+                    }
+                
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Wrapper -->
+    <div id="wrapper" class="animate__animated animate__fadeIn">
+
+        @RenderBody()
+
+        <!-- Footer -->
+        <footer class="wrapper style1 align-center">
+            <div class="inner">
+                <ul class="icons">
+                    @if (SystemProperties.Instance.SystemSettings != null)
+                    {
+                        @if (SystemProperties.Instance.SystemSettings.SocialTwitterURL.HasValue())
+                        {
+                            <li>
+                                <a href="@SystemProperties.Instance.SystemSettings.SocialTwitterURL" target="_blank" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a>
+                            </li>
+                        }
+                        @if (SystemProperties.Instance.SystemSettings.SocialFacebookURL.HasValue())
+                        {
+                            <li>
+                                <a href="@SystemProperties.Instance.SystemSettings.SocialFacebookURL" target="_blank" class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a>
+                            </li>
+                        }
+                        @if (SystemProperties.Instance.SystemSettings.SocialInstagramURL.HasValue())
+                        {
+                            <li>
+                                <a href="@SystemProperties.Instance.SystemSettings.SocialInstagramURL" target="_blank" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a>
+                            </li>
+                        }
+                        @if (SystemProperties.Instance.SystemSettings.SocialLinkedinURL.HasValue())
+                        {
+                            <li>
+                                <a href="@SystemProperties.Instance.SystemSettings.SocialLinkedinURL" target="_blank" class="icon brands style2 fa-linkedin-in"><span class="label">LinkedIn</span></a>
+                            </li>
+                        }
+                        @if (SystemProperties.Instance.SystemSettings.PublicEmailAddress.HasValue())
+                        {
+                            <li>
+                                <a href="mailto:@SystemProperties.Instance.SystemSettings.PublicEmailAddress" class="icon style2 fa-envelope"><span class="label">Email</span></a>
+                            </li>
+                        }
+                    }
+                </ul>
+                <p>
+                    &copy; CLEVAR Group @DateTime.Now.Year.ToString() . <br> Website Design by TeamInt. <br />
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <div id="btnGoToTop" title="Go to top"><i class="far fa-arrow-alt-circle-up"></i></div>
+
+    <style>
+        /* Go To Top Button */
+        #btnGoToTop {
+            display: none; /* Hidden by default */
+            position: fixed; /* Fixed/sticky position */
+            bottom: 10px; /* Place the button at the bottom of the page */
+            right: 10px; /* Place the button 30px from the right */
+            z-index: 10; /* Make sure it does not overlap */
+            border: none; /* Remove borders */
+            outline: none; /* Remove outline */
+            color: @Colour.BlueLighter; /* Text color */
+            cursor: pointer; /* Add a mouse pointer on hover */
+            padding: 0.8rem; /* Some padding */
+            border-radius: 10px; /* Rounded corners */
+            font-size: 2rem; /* Increase font size */
+        }
+
+            #btnGoToTop:hover {
+                color: @Colour.Blue; /* Text color */
+            }
+
+    </style>
+
+    @* JS *@
+    <script src="~/js/story/jquery.min.js"></script>
+    @*<script src="~/js/story/jquery.scrollex.min.js"></script>
+    <script src="~/js/story/jquery.scrolly.min.js"></script>
+    <script src="~/js/story/browser.min.js"></script>
+    <script src="~/js/story/breakpoints.min.js"></script>
+    <script src="~/js/story/util.js"></script>
+    <script src="~/js/story/main.js"></script>*@
+
+    <script>
+        // When the user scrolls down run this function
+        window.onscroll = function () { scrollFunction() };
+        function scrollFunction() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                btnGoToTop.style.display = "block";
+            } else {
+                btnGoToTop.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        var btnGoToTop = document.getElementById("btnGoToTop");
+        btnGoToTop.addEventListener("click", function () {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        });
+    </script>
+
+    <script type="module" src="~/js/threecanvas.js?rev=@SystemProperties.Instance.Revision"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

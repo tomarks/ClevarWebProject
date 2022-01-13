@@ -1,0 +1,27 @@
+﻿@page
+@model ClevarWeb.LogoutModel
+@{
+    ViewData["Title"] = "Logout";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<section id="logout">
+    <div class="content">
+        <h2>You have been logged out.</h2>
+    </div>
+</section>
+
+<style>
+    #logout {
+        height: 100vh;
+        width: 100%;
+        padding: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        #logout .content {
+            text-align: center;
+            width: 100%;
+        }
+</style>

@@ -1,0 +1,239 @@
+/* Swiper Layout */
+:root {
+    --swiper-theme-color: #4191DC;
+}
+.swiper-container {
+    width: 100%;
+    overflow: visible;
+    height: 500px;
+    margin-top: 5.5rem;
+}
+
+/*This is the container for the cartoon cards front and back */
+.swiper-slide {
+    overflow: hidden;
+    /* Sizes */
+    width: 400px;
+    height: 90%;
+    /*Flex Settings*/
+    display: flex;
+    overflow:visible;
+}
+
+.card-container {
+    overflow: hidden;
+    /* Sizes */
+    width: 400px;
+    height: 80%;
+    /*Flex Settings*/
+    display: flex;
+    align-content: center;
+    overflow: visible;
+}
+
+/* Cartoons */
+/* Overlay Image Layers on top of eachother */
+.cartoon-image {
+    margin: auto;
+    position: absolute;
+    height: 100%; /* Allow the cards to appear similar heights */
+}
+
+/* Circle for profile image on back of card */
+.profileCircle {
+    border-radius: 50%;
+    border: 1px solid rgb(248, 248, 248);
+    box-shadow: 1px 1px 5px rgba(85, 85, 85, 0.671), -1px -1px 1px rgba(85, 85, 85, 0.671);
+    max-width: 120px;
+    position: relative;
+    /* left: -60px; */
+    /* top: -10px; */
+    float: left;
+    margin-right: 10px;
+}
+
+
+.flip {
+    /*Flex Settings*/
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    overflow:visible;
+
+    backface-visibility: hidden;
+}
+    .flip > .front,
+    .flip > .back {
+        /*Flex Settings*/
+        display: flex;
+        align-content: center;
+        align-items: center;
+        justify-content: center;
+
+        transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transition-duration: .5s;
+        transition-property: transform, opacity;
+        color: #000000;
+        width: 80%;
+        height: 90%;
+    }
+
+    .flip > .front {
+        transform: rotateY(0deg);
+    }
+
+    .flip > .back {
+        position: absolute;
+        opacity: 0;
+        background: rgba(255, 255, 255, 0.65);
+        transform: rotateY(180deg);
+        box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.4);
+        max-width: 500px;
+        padding: 10px;
+    }
+
+    .flip:hover > .front {
+        transform: rotateY(180deg);
+    }
+
+    .flip:hover > .back {
+        opacity: 1;
+        transform: rotateY(0deg);
+    }
+
+.back > .content {
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+}
+    .back > .content p {
+        font-size: 1em;
+        letter-spacing: normal;
+        font-weight: 200;
+    }
+
+    /* Scrollbar */
+    .back > .content::-webkit-scrollbar { background-color: #fff;width: 6px}
+    .back > .content::-webkit-scrollbar-track { background-color: #EFF3F4; }
+    .back > .content::-webkit-scrollbar-thumb { background-color: #cdcdcd; border-radius: 16px; }
+    .back > .content::-webkit-scrollbar-button { display: none }
+    .back > .content::-webkit-scrollbar-thumb:vertical:hover { background-color: #A2C6ED; }
+
+.nameplate {
+    display:flex;
+    justify-content:center;
+    justify-items:center;
+    text-align:center;
+    position: absolute;
+    width: 100%;
+    height: 4.8rem;
+    top: -7rem;
+    display: none;
+    padding: 0.2rem;
+    z-index: 3;
+}
+
+    .nameplate > h4, .nameplate > h2, .nameplate > p {
+        line-height: 1.6rem;
+        margin: auto;
+    }
+
+    .swiper-slide-active > .nameplate {
+        display: block;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*.swiper-slide.is-flipped {
+        transform: rotateY(180deg);
+    }*/
+
+/*.cards {
+    position: absolute;
+    backface-visibility: hidden;
+}*/
+
+
+/*This is the container for the cartoon cards front and back */
+/*.card-frontFace {
+    overflow: hidden;
+    height: 500px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}*/
+
+/*.card-backFace {
+    background: rgba(255, 255, 255, 0.65);
+    transform: rotateY(180deg);
+    box-shadow: 4px 4px 20px rgb(248, 248, 248);
+    max-width: 500px;
+}
+.card-backFace-content {
+
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

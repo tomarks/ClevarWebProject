@@ -1,0 +1,90 @@
+﻿@using Data.Models
+@using ClevarWeb.Utility;
+
+@model List<Person>
+
+<section id="carouselContainer">
+    <!-- Slider main container -->
+    <div class="swiper-container">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+            <!-- Slides -->
+            @{
+                foreach (var person in Model)
+                {
+                    <div id="@person.Name" name="@person.Name" class="swiper-slide">
+                        <div class="nameplate">
+                            <h4>@person.Title <br /></h4>
+                            <h2>@person.Name <br /></h2>
+                            <p>@person.SubTitle <br /></p>
+                        </div>
+
+                        <div class="card-container flip">
+                            <div class="front">
+                                @{
+                                    foreach (var image in person.CartoonImages.OrderByDescending(x => x.LayerNumber))
+                                    {
+                                        <img class="cartoon-image @image.Styles" src="@image.Document.GetFilePath()">
+                                    }
+                                }
+                            </div>
+                            <div class="back">
+                                <div class="content">
+                                    @if (person.PrimaryDocument != null && person.PrimaryDocument.IsImage())
+                                    {
+                                        <span class="portrait">
+                                            <img src="@person.PrimaryDocument.GetFilePath()" alt="@person.PrimaryDocument.FileName" />
+                                        </span>
+
+                                    }
+                                    <div class="cardNameContainer">
+                                        <h2>@person.Name</h2>
+                                    </div>
+
+                                    @Html.Raw(person.BioHtml)
+
+                                    <div class="seeMoreContainer">
+                                        @if (person.AuthoredProjects.Count > 0)
+                                        {
+                                            <a class="button small primary" asp-page="/Projects" asp-route-authorId=@person.Id>See my Projects!</a>
+                                        }
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        @*<div class="swiper-pagination"></div>*@
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+
+    </div>
+</section>
+
+<style>
+    .seeMoreContainer {
+        margin-top: 20px;
+    }
+
+    .cardNameContainer {
+        height: 100px;
+        margin-bottom: 20px;
+    }
+
+    .content h2 {
+        font-weight: 200;
+        line-height: 50px;
+    }
+
+    .portrait {
+        float: left;
+    }
+
+        .portrait img {
+            max-height: 100px;
+            border-radius: 50%;
+        }
+</style>

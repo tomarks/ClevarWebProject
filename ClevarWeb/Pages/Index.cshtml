@@ -1,0 +1,127 @@
+﻿@page
+@model IndexModel
+@using System.Diagnostics;
+@{
+    ViewData["Title"] = "Home";
+    ViewBag.PageName = "Index";
+}
+@section Scripts {
+    <script src="~/lib/swiper/js/swiper.min.js"></script>
+    <script src="~/js/homepage.js"></script>
+}
+@section HTMLHead {
+    <link href="~/lib/swiper/css/swiper.min.css" type="text/css" rel="stylesheet">
+    <link href="~/css/homepage.css?rev=@SystemProperties.Instance.Revision" type="text/css" rel="stylesheet" />
+}
+
+<!-- Header Style2 With Slideshow -->
+<section class="banner style1 orient-left content-align-center image-position-right fullscreen">
+    <div class="content">
+        <img id="header-logo" src="~/img/Logo1Main.svg" />
+        <header>
+            <h3><span>Cognitive</span> <span>Learning</span> <span>Environments</span> in <span>Virtual & Augmented Reality</span></h3>
+            <h4><i>VR &amp; AR Research Group</i></h4>
+        </header>
+        <div class="stacked">
+            <a asp-fragment="projectGallery" class="primary button small wide smooth-scroll-middle">See Our Projects!</a>
+            <br>
+
+            @*<a asp-page="./People" class="button small wide smooth-scroll-middle">Meet the Team!</a>*@
+            <br>
+        </div>
+    </div>
+    <!-- Slideshow container -->
+    <div id="header-slides" class="image">
+        @foreach (var document in Model.Documents)
+        {
+            <div class="header-slide fade">
+                <img src="@document.GetFilePath()" alt="@document.DocumentName">
+            </div>
+        }
+        @if (Model.Documents.Count == 0)
+        {
+            <div class="header-slide fade">
+                <img src="~/img/VR Dark Backround Wide 1.jpg">
+            </div>
+        }
+        <br>
+    </div>
+</section>
+
+<section class="wrapper banner style1">
+    <div class="inner">
+        <blockquote>
+            <img class="icon" src="~/img/vr-glasses.png" />
+            <h2>
+                We specialize in immersive virtual environments, applying them to a
+                diverse range of areas.
+            </h2>
+        </blockquote>
+    </div>
+</section>
+
+<!-- Projects Spotlight Style2 -->
+<!-- Gallery -->
+<div id="projectGallery" class="swiper-container gallery-top">
+    <div class="swiper-wrapper">
+
+        @foreach (var project in Model.Projects)
+        {
+            <div class="swiper-slide">
+                <section class="spotlight style2 orient-right content-align-left image-position-center">
+                    <div class="content">
+                        <div class="col">
+                            <br />
+                            <h2>@project.Title</h2>
+                            <h3>@project.Tagline</h3>
+                            <p>@project.GetShortDescription</p>
+                        </div>
+                        <ul class="actions stacked">
+                            <li><a href="#" class="button">Learn More</a></li>
+                        </ul>
+                    </div>
+                    <div class="image">
+                        <img src="@project.GetPrimaryDocumentFilePath()" />
+                    </div>
+                </section>
+
+            </div>
+        }
+    </div>
+    <!-- Add Arrows -->
+    @*<div class="swiper-button-next swiper-button-white"></div>*@
+    @*<div class="swiper-button-prev swiper-button-white"></div>*@
+</div>
+<div class="swiper-container gallery-thumbs">
+    <div class="swiper-wrapper">
+        @foreach (var project in Model.Projects)
+        {
+        <div class="swiper-slide" style="background-image:url('@project.GetPrimaryDocumentFilePath()'">
+            <div class="caption">
+                <h4>@project.Title</h4>
+                <p>@project.Tagline</p>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+
+<section class="wrapper banner style1">
+    <div class="inner">
+        <h1>Our Goal</h1>
+        <p>
+            Our goal is to encourage industry and organizations to incorporate
+            virtual technology; to develop VR/AR applications to meet new needs;
+            and to aid in training and skill development of those seeking to
+            become virtual technology professionals.
+        </p>
+        <a asp-page="./Projects" class="primary button small wide smooth-scroll-middle">See More Projects!</a>
+        <br />
+        <br />
+        <h2>The Team</h2>
+        <p>
+            Come and meet the CLEVAR Team Members. They are the brains behind the CLEVAR research projects and publications.
+        </p>
+        <a asp-page="./People" class="primary button small wide smooth-scroll-middle">Meet the Team!</a>
+    </div>
+</section>

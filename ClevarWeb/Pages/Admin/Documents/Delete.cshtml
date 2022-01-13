@@ -1,0 +1,37 @@
+﻿@page
+@model ClevarWeb.Pages.Admin.Documents.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<section class="wrapper style2 align-center fullscreen">
+    <div class="inner">
+        <section>
+            <header>
+                <div class="workflow">
+                    <h1>
+                        Delete File?
+                    </h1>
+                    <h2>@Model.document.DocumentName</h2>
+                    <h3>@Model.document.FileName</h3>
+                    <code>Created: @Model.document.DisplayCreatedDateTime</code>
+                    <br />
+                    <h3>Are you sure you want to remove this file?</h3>
+                    <br />
+                </div>
+            </header>
+            <div class="content">
+                <form method="post">
+                    <input type="hidden" asp-for="document.Id" />
+                    <input type="submit" value="Delete" class="button primary" />
+                </form>
+
+                <div>
+                    <a class="button small" asp-page="./Index">Back to List</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>

@@ -1,0 +1,51 @@
+﻿@page
+@model ClevarWeb.Details
+
+@{
+    ViewData["Title"] = "Projects_Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@section HTMLHead {
+    <link href="~/css/projects_details.css" type="text/css" rel="stylesheet" />
+}
+
+<partial name="_ClevarLogoHeadingPartial" />
+
+<section class="wrapper2 align-center fullscreen">
+    <div class="inner_wrapper">
+        <section>
+            <header>
+                <div class="workflow">
+                    <h3 class="main-post-title">
+                        @Model.Project.Title
+                    </h3>
+                    <h2>
+                        @Model.Project.Tagline
+                    </h2>
+                    @if (Model.Project.PrimaryDocument != null)
+                    {
+                        <img class="Project-image" src="@Model.Project.PrimaryDocument.GetFilePath()" alt="@Model.Project.PrimaryDocument.DocumentName" />
+                    }
+                </div>
+            </header>
+            <div class="content">
+
+                @Html.Raw(Model.Project.HTMLContent)
+
+                <br />
+
+            </div>
+
+            <div>
+                <a class="button small" asp-page="./Index">Back to Home</a>
+
+            </div>
+        </section>
+    </div>
+
+</section>
+
+
+<style>
+</style>

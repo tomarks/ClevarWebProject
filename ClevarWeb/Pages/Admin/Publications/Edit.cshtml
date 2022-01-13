@@ -1,0 +1,152 @@
+﻿@page
+@using ClevarWeb.Utility;
+@model ClevarWeb.Pages.Admin.Publications.EditPublicationModel
+@{
+    ViewData["Title"] = "Edit Publication";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+@section HTMLHead {
+    <link href="~/lib/trumbowyg/ui/trumbowyg.min.css" type="text/css" rel="stylesheet" />
+}
+
+<section class="wrapper style2 align-center fullscreen">
+    <div class="inner">
+        <section>
+            <header>
+                <div class="workflow">
+                    <h2>Edit Publication</h2>
+                    <ul>
+                        <li>
+                            Create
+                        </li>
+                        <li class="bold">
+                            Edit Content
+                        </li>
+                        <li>
+                            Preview
+                        </li>
+                    </ul>
+                </div>
+            </header>
+
+            <div class="content">
+                <form method="post" class="fields">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="PrimaryDocumentPath" />
+
+                    <div class="primaryImage">
+                        <img id="primaryDocumentImage" src="@Model.PrimaryDocumentPath" />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="field">
+                            <label asp-for="UploadedFile" class="file-upload">
+                                <i class="fa fa-upload"></i> Upload new image..
+                            </label>
+                            <input asp-for="UploadedFile" type="file" />
+                        </div>
+                    </div>
+                    <div class="fields">
+                        <div class="field">
+                            <label asp-for="PublicationName"></label>
+                            <input asp-for="PublicationName" />
+                            <span asp-validation-for="PublicationName" class="text-danger"></span>
+                        </div>
+                        <div class="field third">
+                            <label asp-for="PublicationUrl"></label>
+                            <input asp-for="PublicationUrl"></input>
+                            <span asp-validation-for="PublicationUrl" class="text-danger"></span>
+                        </div>
+
+                        @if (Model.PeopleSelectListItems.Count > 1)
+                        {
+                            <div class="field third">
+                                <label asp-for="AuthorID">Author</label>
+                                <select asp-for="AuthorID" asp-items="Model.PeopleSelectListItems"></select>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="field third">
+                                <label asp-for="AuthorID">Author</label>
+                                <select class="disabled" asp-for="AuthorID" asp-items="Model.PeopleSelectListItems">No People Data</select>
+                            </div>
+                        }
+
+                        <div class="field third">
+                            <label asp-for="PublishedDateTime"></label>
+                            <input asp-for="PublishedDateTime" type="text" asp-format="{0:d-MMM-yyyy}" class="flatpickr" />
+                            <span asp-validation-for="PublishedDateTime" class="text-danger"></span>
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group">
+                        <button asp-page-handler="Save" type="submit" value="Save" class="button primary">Save and exit</button>
+                    </div>
+                </form>
+
+                <div>
+                    <a class="button small" asp-page="Index">Back to List</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $("#UploadedFile").change(function (evt) {
+                console.log("Submitting File...")
+                evt.preventDefault();
+                $.ajax({
+                    url: '?handler=UploadFile',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    data: new FormData(document.forms[0]),
+                    contentType: false,
+                    processData: false,
+                    type: 'post',
+                    success: function (e) {
+                        if (e) {
+                            if (e.error) {
+                                console.log(e.error);
+
+                            } else {
+                                console.log('File Path - ' + e.path);
+                                $("#primaryDocumentImage").attr("src", e.path);
+                            }
+                        }
+                    }
+                });
+            });
+
+            $(".flatpickr").flatpickr({
+                dateFormat: "d-M-Y",
+                allowInput: true
+            });
+
+        });
+
+    </script>
+}
+
+<style>
+    .primaryImage {
+    }
+
+        .primaryImage img {
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-radius: 0.25rem;
+            height: 100%;
+            max-height: 400px;
+        }
+</style>

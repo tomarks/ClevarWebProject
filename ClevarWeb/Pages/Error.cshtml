@@ -1,0 +1,52 @@
+﻿@page
+@model ErrorModel
+@{
+    ViewData["Title"] = "Error";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<section id="error">
+    <div class="content">
+
+        @if (Model.PageStatusCode == 404)
+        {
+            <h1 class="text-danger">404.</h1>
+
+            if (Model.ErrorUrl.HasValue())
+            {
+                <h2 class="text-danger">@Model.ErrorUrl not found.</h2>
+            }
+            else
+            {
+                <h2 class="text-danger">Page not found.</h2>
+            }
+        }
+        else
+        {
+            <h1 class="text-danger">Error.</h1>
+            <h2 class="text-danger">An error occurred while processing your request.</h2>
+            @if (Model.ShowRequestId)
+            {
+                <p>
+                    <strong>Request ID:</strong> <code>@Model.RequestId</code>
+                </p>
+            }
+        }
+    </div>
+</section>
+
+<style>
+    #error {
+        height: 100vh;
+        width: 100%;
+        padding: 3rem;
+
+        display: flex;
+        align-items: center;
+        justify-content:center;
+    }
+        #error .content {
+            text-align: center;
+            width: 100%;
+        }
+
+</style>

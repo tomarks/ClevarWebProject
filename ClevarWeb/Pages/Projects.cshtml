@@ -1,0 +1,129 @@
+﻿@page
+@model ClevarWeb.ProjectsModel
+@using ClevarWeb.Utility;
+
+@{
+    ViewData["Title"] = "Projects";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@section HTMLHead {
+    <link href="~/css/projects.css?rev=@SystemProperties.Instance.Revision" type="text/css" rel="stylesheet" />
+}
+
+@section Scripts{
+    <script>$(document).ready(function() {
+
+        $('#AuthorDropdown').on('change', function() {
+
+            var authorId = this.value;
+            console.log(this)
+            if (authorId != null) {
+                window.location.href = "/Projects?authorId=" + authorId;
+
+            }
+            else {
+                 window.location.href = "/Projects"
+            }
+     });
+
+     });
+    </script>
+
+    <script>
+    $(document).ready(function () {
+
+            $('#SupervisorDropdown').on('change', function () {
+
+                var supervisorId = this.value;
+                console.log(this)
+                if (supervisorId != null) {
+                    window.location.href = "/Projects?supervisorId=" + supervisorId;
+
+                }
+                else {
+                    window.location.href = "/Projects"
+                }
+            });
+
+        });
+    </script>
+ 
+}
+
+<partial name="_ClevarLogoHeadingPartial" />
+
+<div>
+    <div id="pagecontentwrapper" class="container animated animatedFadeInUp fadeInUp panel">
+        <div class="header2">
+            <span class="bigicon icon-rocket"></span>
+            <div class="Projects_Header">Projects</div>
+            <div class="Projects_Para"> Our current projects the CLEVAR team is working on.</div>
+            <hr class="separator">
+        </div>
+
+        <div class="dropdowns">
+          
+            <div class="supervisor-dropdown">
+                @if (Model.PeopleSelectListItems.Count > 1)
+                {
+                   <label>Supervisor</label>
+                   <select id="SupervisorDropdown" asp-for="@Model.SupervisorId" asp-items="Model.PeopleSelectListItems"></select>
+                }
+            </div>
+
+            <div class="author-dropdown">
+                @if (Model.PeopleSelectListItems.Count > 1)
+                {
+                    <label>Author</label>
+                    <select id="AuthorDropdown" asp-for="@Model.AuthorId" asp-items="Model.PeopleSelectListItems"></select>
+                }
+            </div>
+        </div>
+
+        <div class="wrapper">
+
+            <div class=" content">
+
+                <div class="list-row">
+                    @foreach (var item in Model.Projects)
+                    {
+                        <article class=" list-post d-flex">
+                            <div data-aos="fade-up" class="Projects hover-grow">
+                                <div class=" projects-back d-flex">
+                                    <a class="main-img">
+                                        <img src="@item.GetPrimaryDocumentFilePath()" alt="sample image" class="post-img">
+                                    </a>
+                                    <div class="post-content d-flex">
+                                        <div class="main-info">
+                                            <div class="projects-heading">
+                                                Projects
+                                            </div>
+
+                                            <h3 class="main-post-title">
+                                                <a asp-page="/Projects_Details" asp-route-id=@item.Id>
+                                                    @Html.DisplayFor(modelItem => item.Title)
+                                                </a>
+                                            </h3>
+                                            <div class="main-post-desc">
+                                                @Html.DisplayFor(modelItem => item.GetShortDescription)
+
+                                            </div>
+                                            <div class="main-post-info">
+                                                <div class="pub-date">@Html.DisplayFor(modelItem => item.DisplayPublishDate) </div>
+                                                <div class="author"> @Html.DisplayFor(modelItem => item.DisplayAuthorName) </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

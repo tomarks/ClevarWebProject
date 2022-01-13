@@ -1,0 +1,69 @@
+﻿@page
+@model ClevarWeb.Pages.Admin.Publications.CreateModel
+
+@{
+    ViewData["Title"] = "Create Publication";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<section class="wrapper style2 align-center fullscreen">
+    <div class="inner">
+        <section>
+            <header>
+                <div class="workflow">
+                    <h2>Create a New Publication</h2>
+                    <ul>
+                        <li class="bold">
+                            Create
+                        </li>
+                        <li>
+                            Edit Content
+                        </li>
+                        <li>
+                            Preview
+                        </li>
+                    </ul>
+                    <p>
+                        Create a Clevar publication reference.
+                    </p>
+                </div>
+            </header>
+
+            <div class="content">
+
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="fields">
+                        <div class="field">
+                            <label asp-for="publication.PublicationName"></label>
+                            <input asp-for="publication.PublicationName" />
+                            <span asp-validation-for="publication.PublicationName" class="text-danger"></span>
+                        </div>
+                        <div class="field">
+                            <label asp-for="publication.PublicationUrl"></label>
+                            <textarea asp-for="publication.PublicationUrl"></textarea>
+                            <span asp-validation-for="publication.PublicationUrl" class="text-danger"></span>
+                        </div>
+                        <hr />
+
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="button primary" />
+                    </div>
+                </form>
+
+                <div>
+                    <a class="button small" asp-page="Index">Back to List</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

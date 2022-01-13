@@ -1,0 +1,75 @@
+﻿@page
+@model ClevarWeb.Pages.Admin.People.CreateModel
+
+@{
+    ViewData["Title"] = "Create People";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<section class="wrapper style2 align-center fullscreen">
+    <div class="inner">
+        <section>
+            <header>
+                <div class="workflow">
+                    <h2>Create a New Clevar Person</h2>
+                    <ul>
+                        <li class="bold">
+                            Create
+                        </li>
+                        <li>
+                            Edit - Bio
+                        </li>
+                        <li>
+                            Edit - Cartoon
+                        </li>
+                        <li>
+                            Preview
+                        </li>
+                    </ul>
+                    <p>
+                        Create a new Clevar Employee record which can be displayed on the public People Page (Cartoon Carousel).
+                    </p>
+                </div>
+            </header>
+
+            <div class="content">
+
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="fields">
+                        <div class="field">
+                            <label asp-for="Person.Name"></label>
+                            <input asp-for="Person.Name" />
+                            <span asp-validation-for="Person.Name" class="text-danger"></span>
+                        </div>
+                        <div class="field half">
+                            <label asp-for="Person.Title"></label>
+                            <input asp-for="Person.Title" />
+                            <span asp-validation-for="Person.Title" class="text-danger"></span>
+                        </div>
+                        <div class="field half">
+                            <label asp-for="Person.SubTitle"></label>
+                            <input asp-for="Person.SubTitle" />
+                            <span asp-validation-for="Person.SubTitle" class="text-danger"></span>
+                        </div>
+                        <hr />
+
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="button primary" />
+                    </div>
+                </form>
+
+                <div>
+                    <a class="button small" asp-page="Index">Back to List</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,181 @@
+﻿@using ClevarWeb.Utility;
+@using System.Diagnostics;
+@{
+    var routePair = ViewContext.RouteData.Values.FirstOrDefault();
+    string currentRoute = "/Admin";
+    if (routePair.Value != null)
+    {
+        currentRoute = routePair.Value.ToString();
+        Trace.WriteLine(currentRoute);
+    }
+}
+@functions {
+    public static string GetConnectionStyle => SystemProperties.Instance.IsDbConnected ? Colour.Green : Colour.Red;
+    public static string GetNavActive(string navElementName, string currentRoute = "")
+    {
+        return currentRoute.Contains(navElementName) ? " active" : "";
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name=" theme-color" content="@Colour.Blue">
+    <title>@ViewData["Title"] - CMS</title>
+
+    <link href="~/lib/animate.css/animate.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/css/story/story.css" type="text/css" rel="stylesheet" />
+    <link href="~/css/story/fontawesome-all.min.css" type="text/css" rel="stylesheet">
+    <link href="~/css/site.css?rev=@SystemProperties.Instance.Revision" type="text/css" rel="stylesheet" />
+    <link href="~/lib/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/lib/Trumbowyg/ui/trumbowyg.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/lib/datatables/css/dataTables.material.min.css" type="text/css" rel="stylesheet">
+    <link href="~/css/admin.css?rev=@SystemProperties.Instance.Revision" type="text/css" rel="stylesheet" />
+    @RenderSection("HTMLHead", required: false)
+
+
+</head>
+<body>
+    <div class="navbar">
+        <div class="navitem @GetNavActive("/Admin/Index", currentRoute)">
+            <a asp-page="/Admin/Index"><i class="fas fa-fw fa-home" aria-hidden="true"></i><span class="txt"> Home</span></a>
+        </div>
+        <div class="navitem @GetNavActive("/Admin/Settings", currentRoute)">
+            <a asp-page="/Admin/Settings"><i class="fas fa-fw fa-wrench"></i><span class="txt"> Settings</span></a>
+        </div>
+        <div class="navitem @GetNavActive("/Admin/Documents", currentRoute)">
+            <a asp-page="/Admin/Documents/Index"><i class="fas fa-fw fa-folder-open"></i><span class="txt"> File Manager</span></a>
+        </div>
+        <div class="navitem @GetNavActive("/Admin/Projects", currentRoute)">
+            <a asp-page="/Admin/Projects/Index"><i class="fas fa-fw fa-vr-cardboard"></i><span class="txt"> Projects</span></a>
+        </div>
+        <div class="navitem @GetNavActive("/Admin/People", currentRoute)">
+            <a asp-page="/Admin/People/Index"><i class="fas fa-fw fa-users"></i><span class="txt"> People</span></a>
+        </div>
+        <div class="navitem @GetNavActive("/Admin/Publications", currentRoute)">
+            <a asp-page="/Admin/Publications/Index"><i class="fas fa-fw fa-file-contract"></i><span class="txt"> Publications</span></a>
+        </div>
+        @*<div class="navitem @GetNavActive("/Admin/News", currentRoute)">
+            <a asp-page="/Admin/News/Index"><i class="fas fa-fw fa-newspaper"></i><span class="txt"> News</span></a>
+        </div>*@
+
+
+        <span class="version">v @SystemProperties.Instance.Version</span>
+        <div class="navitem" style="float:right">
+            <a asp-page="/Admin/Logout"><i class="fas fa-fw fa-sign-out-alt"></i><span class="txt"> Logout</span></a>
+        </div>
+        <span class="dbconnection tooltip" style="background-color: @GetConnectionStyle">
+            <i class="fas fa-fw fa-database"></i>
+            <span class="tooltiptext"> Last Checked @SystemProperties.Instance.LastDbCheckDateTime.ToString("h:mmtt").ToLower() @SystemProperties.Instance.DbConnectionStatus</span>
+        </span>
+        <span class="dbconnection tooltip" style="background-color: @Colour.Blue">
+            <a asp-page="/Index"><i class="fas fa-fw fa-globe"></i></a>
+        </span>
+    </div>
+    <!-- Wrapper -->
+    <div id="wrapper" class="animate__animated animate__fast animate__fadeIn">
+
+        @RenderBody()
+
+    </div>
+
+    @* Libs *@
+
+    <script src="~/js/story/jquery.min.js"></script>
+    <script src="~/lib/Trumbowyg/trumbowyg.min.js"></script>
+    <script src="~/lib/flatpickr/flatpickr.min.js"></script>
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+
+    @*<script src="~/js/story/jquery.scrollex.min.js"></script>
+        <script src="~/js/story/jquery.scrolly.min.js"></script>
+        <script src="~/js/story/browser.min.js"></script>
+        <script src="~/js/story/breakpoints.min.js"></script>
+        <script src="~/js/story/util.js"></script>
+        <script src="~/js/story/main.js"></script>*@
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+<style>
+
+    /* NAVIGATION */
+    /* Style the navigation bar */
+    .navbar {
+        z-index:10;
+        position:sticky;
+        left:0px;
+        top:0px;
+        font-size: 20px;
+        width: 100%;
+        background-color: #555;
+        height: 3.25em;
+
+    }
+        .navbar .navitem {
+            display: inline-block;
+            float: left;
+            padding: 0.8em 0.6em;
+        }
+        /* Navbar links */
+        .navbar a {
+            text-align: center;
+            color: white;
+            text-decoration: none;
+        }
+            /* Navbar links on mouse-over */
+            .navbar .navitem:hover {
+                background-color: #000;
+            }
+
+        .navbar .version {
+            float: right;
+            text-align: center;
+            padding: 0.8em 0.6em;
+            color: white;
+            font-size: 1em;
+        }
+
+        .navbar .dbconnection {
+            text-align: center;
+            color: white;
+            float: right;
+            text-align: center;
+            padding: 0.8em 0.6em;
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+        }
+
+    /* Current/active navbar link */
+    .active {
+        background-color: @Colour.Blue;
+    }
+
+    /* Add responsiveness */
+    @@media screen and (max-width: 1200px) {
+        .navbar {
+            font-size: 16px;
+        }
+    }
+
+    @@media screen and (max-width: 1000px) {
+        .navbar {
+            font-size: 14px;
+        }
+    }
+
+    @@media screen and (max-width: 850px) {
+        .navbar .txt {
+            display: none;
+        }
+    }
+
+
+    /*Fix Flatpicker Bug*/
+    .flatpickr-months select {
+        display: inline-block;
+    }
+</style>
+

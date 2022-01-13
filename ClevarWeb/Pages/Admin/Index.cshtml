@@ -1,0 +1,25 @@
+﻿@page
+@model ClevarWeb.AdminIndexModel
+@{
+    ViewData["Title"] = "Index";
+    ViewData["Nav"] = "Index";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+
+<section class="wrapper style2 align-center fullscreen">
+    <div class="inner">
+        <section>
+            <header>
+                <h2>CLEVAR CMS</h2>
+                <h1>Welcome Administrator</h1>
+            </header>
+            <br />
+            <ul class="actions stacked">
+                <li><a asp-page="/Index" class="button primary wide smooth-scroll-middle"> View Public Site </a></li>
+                <li><a asp-page="/Admin/Logout" class="button primary wide smooth-scroll-middle"> Logout </a></li>
+            </ul>
+        </section>
+    </div>
+</section>
+

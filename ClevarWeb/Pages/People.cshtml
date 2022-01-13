@@ -1,0 +1,38 @@
+﻿@page
+@model ClevarWeb.PeoplePageModel
+@using ClevarWeb.Utility;
+
+@{
+    ViewData["Title"] = "CLEVAR Employees";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@section Scripts {
+    <script src="~/lib/swiper/js/swiper.min.js"></script>
+    <script src="~/js/cartoonCarouselPartial.js"></script>
+}
+
+@section HTMLHead {
+    <link rel="stylesheet" href="~/lib/swiper/css/swiper.min.css">
+    <link href="~/css/cartoonCarouselPartial.css?rev=@SystemProperties.Instance.Revision" type="text/css" rel="stylesheet" />
+    <link href="~/css/cartoonCarouselPartial.animations.css?rev=@SystemProperties.Instance.Revision" type="text/css" rel="stylesheet" />
+}
+
+<partial name="_ClevarLogoHeadingPartial" />
+
+<section class="greeting">
+    <div>
+        <p><b>Introducing the very <i>clever</i> members of the CLEVAR Research Group.</b> </p>
+    </div>
+</section>
+
+<style>
+    .greeting{
+        display:flex;
+        justify-content: center;
+        text-align: center;
+    }
+
+</style>
+
+<partial name="_CartoonCarouselPartial" model="Model.People" />

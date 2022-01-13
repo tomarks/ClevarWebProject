@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
+
+namespace ClevarWeb.Pages
+{
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public class ErrorModel : PageModel
+    {
+        public string RequestId { get; set; }
+        public int PageStatusCode { get; set; } = 200;
+        public string ErrorUrl { get; set; } = "";
+        public string Message { get; set; }
+
+        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+
+
+        private readonly ILogger<ErrorModel> _logger;
+
+        public ErrorModel(ILogger<ErrorModel> logger)
+        {
+            _logger = logger;
+        }
+
+        public void OnGet(int? statusCode = null)
+        {
+            try
+            {
+                var feature = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
+                ErrorUrl = feature?.OriginalPath;
+            }
+            catch (Exception) { }
+            
+            if (statusCode.HasValue)
+                PageStatusCode = statusCode.Value;
+
+            RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+        }
+    }
+}

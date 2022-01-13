@@ -1,0 +1,211 @@
+﻿@page
+@using ClevarWeb.Utility;
+@model ClevarWeb.Pages.Admin.Projects.EditProjectModel
+@{
+    ViewData["Title"] = "Edit Project";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+@section HTMLHead {
+    <link href="~/lib/trumbowyg/ui/trumbowyg.min.css" type="text/css" rel="stylesheet" />
+}
+
+<section class="wrapper style2 align-center fullscreen">
+    <div class="inner">
+        <section>
+            <header>
+                <div class="workflow">
+                    <h2>Edit Project</h2>
+                    <ul>
+                        <li>
+                            Create
+                        </li>
+                        <li class="bold">
+                            Edit Content
+                        </li>
+                        <li>
+                            Preview
+                        </li>
+                    </ul>
+                </div>
+            </header>
+
+            <div class="content">
+                <form method="post" class="fields">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="PrimaryDocumentPath" />
+
+                    <div class="primaryImage">
+                        <img id="primaryDocumentImage" src="@Model.PrimaryDocumentPath" />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="field">
+                            <label asp-for="UploadedFile" class="file-upload">
+                                <i class="fa fa-upload"></i> Upload new image..
+                            </label>
+                            <input asp-for="UploadedFile" type="file" />
+                        </div>
+                    </div>
+
+                    <div class="fields">
+                        <div class="field">
+                            <label asp-for="Title"></label>
+                            <input asp-for="Title" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+
+
+                        <div class="field">
+                            <label asp-for="Description"></label>
+                            <textarea asp-for="Description"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        @if (Model.PeopleSelectListItems.Count > 1)
+                        {
+                            <div class="field third">
+                                <label asp-for="AuthorID">Author</label>
+                                <select asp-for="AuthorID" asp-items="Model.PeopleSelectListItems" style="width: 90%; display:inline"></select>
+                                <button class="addPerson" asp-page-handler="Save" type="submit" name="SaveAndContinue" value="AddPerson"><i style="width: 90%; display:inline;" class="fas fa-plus-circle"></i></button> 
+                            </div>
+
+                            <div class="field third">
+                                <label asp-for="SupervisorID">Supervisor</label>
+                                <select asp-for="SupervisorID" asp-items="Model.PeopleSelectListItems" style="width: 90%; display:inline"></select>
+                                <button class="addPerson" asp-page-handler="Save" type="submit" name="SaveAndContinue" value="AddPerson"><i style="width: 90%; display:inline;" class="fas fa-plus-circle"></i></button> 
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="field third">
+                                <label asp-for="AuthorID">Author</label>
+                                <select class="disabled" asp-for="AuthorID" asp-items="Model.PeopleSelectListItems" style="width: 90%; display:inline">No People Data</select>
+                                <button class="addPerson" asp-page-handler="Save" type="submit" name="SaveAndContinue" value="AddPerson"><i style="width: 90%; display:inline;" class="fas fa-plus-circle"></i></button> 
+                            </div>
+
+                            <div class="field third">
+                                <label asp-for="SupervisorID">Supervisor</label>
+                                <select class="disabled" asp-for="SupervisorID" asp-items="Model.PeopleSelectListItems" style="width: 90%; display:inline">No People Data</select>
+                                <button class="addPerson" asp-page-handler="Save" type="submit" name="SaveAndContinue" value="AddPerson"><i style="width: 90%; display:inline;" class="fas fa-plus-circle"></i></button> 
+                            </div>
+                        }
+
+                        <div class="field third">
+                            <label asp-for="PublishedDateTime"></label>
+                            <input asp-for="PublishedDateTime" type="text" asp-format="{0:d-MMM-yyyy}" class="flatpickr" />
+                            <span asp-validation-for="PublishedDateTime" class="text-danger"></span>
+                        </div>
+
+                        <div class="field">
+                            <label asp-for="HTMLContent"></label>
+                            <textarea id="projectContentEditor" asp-for="HTMLContent"></textarea>
+                        </div>
+
+                        <div class="field">
+                            <input asp-for="IsActive" type="checkbox" />
+                            <label asp-for="IsActive"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button asp-page-handler="Save" type="submit" name="SaveAndContinue" value="Preview" class="button primary">Save and Preview</button>
+                        <button asp-page-handler="Save" type="submit" name="SaveAndContinue" value="Exit" class="button primary">Save and Exit</button>
+                    </div>
+                </form>
+
+                <div>
+                    <a class="button small" asp-page="Index">Back to List</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/lib/trumbowyg/trumbowyg.min.js"></script>
+    <script>
+
+        $('#projectContentEditor').trumbowyg({
+            autogrow: true,
+            btns: [
+                ['viewHTML'],
+                ['undo', 'redo'], // Only supported in Blink browsers
+                ['formatting'],
+                ['strong', 'em', 'del'],
+                ['superscript', 'subscript'],
+                ['link'],
+                ['insertImage'],
+                ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+                ['unorderedList', 'orderedList'],
+                ['horizontalRule'],
+                ['removeformat']
+            ]
+        });
+
+        var dtePicker = $(".flatpickr").flatpickr({
+            dateFormat: "d-M-Y",
+            allowInput: true
+        });
+
+        $(document).ready(function () {
+            $("#UploadedFile").change(function (evt) {
+                console.log("Submitting File...")
+                evt.preventDefault();
+                $.ajax({
+                    url: '?handler=UploadFile',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    data: new FormData(document.forms[0]),
+                    contentType: false,
+                    processData: false,
+                    type: 'post',
+                    success: function (e) {
+                        if (e) {
+                            if (e.error) {
+                                console.log(e.error);
+
+                            } else {
+                                console.log('File Path - ' + e.path);
+                                $("#primaryDocumentImage").attr("src", e.path);
+                            }
+                        }
+                    }
+                });
+            });
+        });
+
+    </script>
+}
+
+<style>
+    .primaryImage {
+    }
+        .primaryImage img {
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-radius: 0.25rem;
+            height: 100%;
+            max-height: 400px;
+        }
+
+    a {
+        text-decoration: none!important;
+    }
+
+    button.addPerson {
+        width: 5%; 
+        display:inline;
+        padding: 0;
+        border: none;
+        box-shadow: none;
+        margin: auto;
+    }
+
+
+</style>

@@ -1,0 +1,131 @@
+﻿@page
+@model ClevarWeb.Pages.Admin.Documents.IndexModel
+
+@{
+    ViewData["Title"] = "Documents";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#DocumentTable').DataTable({
+                paging: true,
+                "lengthMenu": [25, 50, 100, 1000],
+                order: [[2, 'desc']],
+                columnDefs: [
+                    { targets: [0,4], orderable: false },
+                    { targets: [2], type: "date" },
+                ]
+            });
+        });
+
+
+        $(document).ready(function () {
+            $("#UploadedFile").change(function (evt) {
+                console.log("Submitting File...")
+                evt.preventDefault();
+                $.ajax({
+                    url: '?handler=UploadFile',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    data: new FormData(document.forms[0]),
+                    contentType: false,
+                    processData: false,
+                    type: 'post',
+                    success: function () {
+                        location.reload();
+                    }
+                });
+            });
+        });
+
+    </script>
+}
+@section HTMLHead {
+}
+
+<section class="wrapper style2 align-center fullscreen">
+    <div class="inner">
+        <section>
+            <header>
+                <h1>File Management</h1>
+            </header>
+            <div class="table-wrapper">
+                @if (Model.Documents.Any())
+                {
+                    <form method="post">
+
+                        <div class="form-group">
+                            <div class="field">
+                                <label asp-for="UploadedFile" class="file-upload">
+                                    <i class="fa fa-upload"></i> Upload new image..
+                                </label>
+                                <input asp-for="UploadedFile" type="file" />
+                            </div>
+                        </div>
+                        <button asp-page-handler="RebuildDatabaseDocuments" type="submit" class="button primary small" value="Rebuild">Rebuild missing files</button>
+                    </form>
+
+                    <table id="DocumentTable">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>File Name</th>
+                                <th>Uploaded</th>
+                                <th style="width:200px">Is Displayed on Homepage</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var document in Model.Documents)
+                            {
+                            <tr>
+                                <td class="topleft">
+                                    <div class="tableImage">
+                                        <img src="@document.GetFilePath(true)" alt="@document.DocumentName" />
+                                    </div>
+                                </td>
+                                <td class="topleft">
+                                    <a href="@DocumentService.ResolveDocumentRelativePath(document.FileName)">@document.DocumentName</a>
+                                </td>
+                                <td class="topleft">
+                                    @document.DisplayCreatedDateTime
+                                </td>
+                                <td class="topleft">
+                                    @document.IsDisplayOnHomePage
+                                </td>
+                                <td class="topleft">
+                                    <a class="button small" asp-page="./Delete" asp-route-id="@document.Id">Delete</a>
+                                    <form asp-page-handler="AddOrRemoveImageOnHomepage" method="post">
+                                        @if (document.IsDisplayOnHomePage)
+                                        {
+                                            <button type="submit" class="primary small" name="id" value=@document.Id>Remove from Homepage</button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" class="small" name="id" value=@document.Id>Add to Homepage</button>
+                                        }
+                                    </form>
+
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <h2>There are no files uploaded to the database.</h2>
+                }
+            </div>
+        </section>
+    </div>
+</section>
+
+
+
+
+<style>
+</style>

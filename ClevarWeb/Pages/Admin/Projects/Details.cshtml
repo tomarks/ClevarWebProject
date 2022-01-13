@@ -1,0 +1,38 @@
+﻿@page
+@model ClevarWeb.Pages.Admin.Projects.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<section class="wrapper style2 align-center fullscreen">
+    <div class="inner">
+        <section>
+            <header>
+                <div class="workflow">
+                    <h1>
+                        @Model.Project.Title
+                    </h1>
+                    <h2>
+                        @Model.Project.Tagline
+                    </h2>
+                    @if (Model.Project.PrimaryDocument != null)
+                    {
+                        <img src="@Model.Project.PrimaryDocument.GetFilePath()" alt="@Model.Project.PrimaryDocument.DocumentName" />
+                    }
+                </div>
+            </header>
+            <div class="content">
+
+                @Html.Raw(Model.Project.HTMLContent)
+
+                <br />
+                <div>
+                    <a class="button primary small" asp-page="./Edit" asp-route-id="@Model.Project.Id">Edit</a>
+                    <a class="button small" asp-page="./Index">Back to List</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
