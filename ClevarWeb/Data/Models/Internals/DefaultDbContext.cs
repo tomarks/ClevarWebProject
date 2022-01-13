@@ -4,6 +4,7 @@ using System;
 using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace ClevarWeb.Data.Models.Internals
 {
@@ -16,8 +17,10 @@ namespace ClevarWeb.Data.Models.Internals
 
         public DefaultDbContext(DbContextOptions options) : base(options)
         {
-            this.Database.SetCommandTimeout(TimeSpan.FromMinutes(5));
-            //this.Database.EnsureCreated();
+            if (!Debugger.IsAttached)
+                this.Database.SetCommandTimeout(TimeSpan.FromMinutes(5));
+
+            this.Database.EnsureCreated();
             // Automatic migration scripts go here
         }
 

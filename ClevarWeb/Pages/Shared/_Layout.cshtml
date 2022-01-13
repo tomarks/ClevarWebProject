@@ -5,13 +5,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <meta name="keywords" content="@SystemProperties.Instance.SystemSettings.SiteKeywords">
-    <meta name="description" content="@SystemProperties.Instance.SystemSettings.SiteDescription">
-    <title>@ViewData["Title"] - @SystemProperties.Instance.SystemSettings.SiteTitle</title>
-    <link href="~/lib/animate.css/animate.min.css"  type="text/css" rel="stylesheet"  />
-    <link href="~/css/story/story.css" type="text/css" rel="stylesheet"  />
-    <link href="~/css/site.css?rev=@SystemProperties.Instance.Revision" type="text/css" rel="stylesheet" />
-    <link href="~/css/menu.css?rev=@SystemProperties.Instance.Revision" type="text/css" rel="stylesheet" />
+    <meta name="keywords" content="@SystemProperties.Instance?.SystemSettings?.SiteKeywords">
+    <meta name="description" content="@SystemProperties.Instance?.SystemSettings?.SiteDescription">
+    <title>@ViewData["Title"] - @SystemProperties.Instance?.SystemSettings?.SiteTitle</title>
+    <link href="~/lib/animate.css/animate.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/css/story/story.css" type="text/css" rel="stylesheet" />
+    <link href="~/css/site.css?rev=@SystemProperties.Instance?.Revision" type="text/css" rel="stylesheet" />
+    <link href="~/css/menu.css?rev=@SystemProperties.Instance?.Revision" type="text/css" rel="stylesheet" />
     @RenderSection("HTMLHead", required: false)
 </head>
 <body>
@@ -26,16 +26,21 @@
             <span></span>
             <span></span>
             <ul id="menu">
-                <a asp-page="/Index" class="menu-text"><li>Home</li></a>
-                <a asp-page="/Projects" class="menu-text"><li>Projects</li></a>
-                <a asp-page="/Publications" class="menu-text"><li>Publications</li></a>
-                <a asp-page="/People" class="menu-text"><li>People</li></a>
-               
-                    @if (SystemProperties.Instance.IsDebugMode)
-                    {
-                        <a asp-page="/Admin/Login" class="menu-text"><li>CMS Login</li></a>
-                    }
-                
+                <a asp-page="/Index" class="menu-text">
+                <li>Home</li></a>
+                <a asp-page="/Projects" class="menu-text">
+                <li>Projects</li></a>
+                <a asp-page="/Publications" class="menu-text">
+                <li>Publications</li></a>
+                <a asp-page="/People" class="menu-text">
+                <li>People</li></a>
+
+                @if (SystemProperties.Instance.IsDebugMode)
+                {
+                    <a asp-page="/Admin/Login" class="menu-text">
+                    <li>CMS Login</li></a>
+                }
+
             </ul>
         </div>
     </nav>
@@ -118,11 +123,11 @@
     @* JS *@
     <script src="~/js/story/jquery.min.js"></script>
     @*<script src="~/js/story/jquery.scrollex.min.js"></script>
-    <script src="~/js/story/jquery.scrolly.min.js"></script>
-    <script src="~/js/story/browser.min.js"></script>
-    <script src="~/js/story/breakpoints.min.js"></script>
-    <script src="~/js/story/util.js"></script>
-    <script src="~/js/story/main.js"></script>*@
+        <script src="~/js/story/jquery.scrolly.min.js"></script>
+        <script src="~/js/story/browser.min.js"></script>
+        <script src="~/js/story/breakpoints.min.js"></script>
+        <script src="~/js/story/util.js"></script>
+        <script src="~/js/story/main.js"></script>*@
 
     <script>
         // When the user scrolls down run this function

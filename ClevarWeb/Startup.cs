@@ -42,10 +42,11 @@ namespace ClevarWeb
                 opt.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             }
-            ).AddCookie(opt => {
+            ).AddCookie(opt =>
+            {
                 opt.LoginPath = new PathString("/Admin/Login");
 
-                if(SystemProperties.Instance.LoginTimeoutMinutes > 0)
+                if (SystemProperties.Instance.LoginTimeoutMinutes > 0)
                     opt.ExpireTimeSpan = TimeSpan.FromMinutes(SystemProperties.Instance.LoginTimeoutMinutes);
             });
 
@@ -64,9 +65,9 @@ namespace ClevarWeb
                 options.Conventions.AllowAnonymousToPage("/Admin/Login");
             }).AddRazorRuntimeCompilation();
 
-            if(Debugger.IsAttached)
+            if (Debugger.IsAttached)
             {
-                services.AddDbContext<ClevarDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ClevarDbContextDev")));
+                services.AddDbContext<ClevarDbContext>(options => options.UseInMemoryDatabase("ClevarWebDev"));
             }
             else
             {
@@ -107,7 +108,7 @@ namespace ClevarWeb
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            
+
             app.UseStatusCodePagesWithReExecute("/Error", "?statusCode={0}");
 
             app.UseHttpsRedirection();
